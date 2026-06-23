@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% block content %}<section class="card danger-zone"><h1>{{title}}</h1><p>{{message}}</p><p><strong>Fehler-ID:</strong> {{error_id}}</p>{% if details %}<h3>Fehlerblock zum Kopieren</h3><textarea rows="18" readonly onclick="this.select()">Version: {{version}}
+Fehler-ID: {{error_id}}
+Pfad: {{request.url.path}}
+
+{{details}}</textarea>{% endif %}<div class="actions"><a class="btn secondary" href="javascript:history.back()">Zurück</a><a class="btn secondary" href="/">Startseite</a></div></section>{% endblock %}
