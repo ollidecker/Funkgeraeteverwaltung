@@ -31,7 +31,7 @@ After=network.target
 [Service]
 Type=simple
 WorkingDirectory=${APP_DIR}
-ExecStart=${APP_DIR}/.venv/bin/python ${APP_DIR}/app.py
+ExecStart=${APP_DIR}/.venv/bin/uvicorn app:app --host 0.0.0.0 --port 14943
 Restart=always
 RestartSec=5
 User=root
@@ -44,9 +44,17 @@ systemctl daemon-reload
 systemctl enable ${SERVICE_NAME}
 systemctl restart ${SERVICE_NAME}
 
+sleep 3
+
 IP=$(hostname -I | awk '{print $1}')
 
 echo ""
-echo "Fertig."
+echo "========================================"
+echo " Installation abgeschlossen"
+echo "========================================"
+echo ""
 echo "Aufruf:"
 echo "http://${IP}:14943"
+echo ""
+echo "Service Status:"
+systemctl --no-pager --full status ${SERVICE_NAME} || true
