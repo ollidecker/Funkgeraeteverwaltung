@@ -2,6 +2,12 @@
 
 Browserbasierte Funkgeräte-Ausgabe ohne Node.js/React.
 
+# Installation Debian:
+
+bash <(curl -s https://raw.githubusercontent.com/ollidecker/Funkgeraeteverwaltung/main/install.sh)
+
+
+
 ## Start Mac
 
 ZIP entpacken und `start-mac.command` doppelklicken.
