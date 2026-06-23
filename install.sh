@@ -1,16 +1,52 @@
-{\rtf1\ansi\ansicpg1252\cocoartf2870
-\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
-{\colortbl;\red255\green255\blue255;}
-{\*\expandedcolortbl;;}
-\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+#!/usr/bin/env bash
+set -e
 
-\f0\fs24 \cf0 apt update\
-apt install -y python3 python3-pip git\
-\
-git clone https://github.com/ollidecker/Funkgeraeteverwaltung.git\
-\
-pip3 install -r requirements.txt\
-\
-systemctl enable funkgeraeteverwaltung\
-systemctl start funkgeraeteverwaltung}
+APP_DIR="/opt/funkgeraeteverwaltung"
+REPO_URL="https://github.com/ollidecker/Funkgeraeteverwaltung.git"
+SERVICE_NAME="funkgeraeteverwaltung"
+
+echo "Installiere Funkgeraeteverwaltung..."
+
+apt update
+apt install -y git python3 python3-venv python3-pip
+
+rm -rf "$APP_DIR"
+git clone "$REPO_URL" "$APP_DIR"
+
+cd "$APP_DIR"
+
+python3 -m venv .venv
+source .venv/bin/activate
+
+pip install --upgrade pip
+pip install -r requirements.txt
+
+mkdir -p data logs pdfs project_images
+
+cat > /etc/systemd/system/${SERVICE_NAME}.service <<EOF
+[Unit]
+Description=Funkgeraeteverwaltung
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=${APP_DIR}
+ExecStart=${APP_DIR}/.venv/bin/python ${APP_DIR}/app.py
+Restart=always
+RestartSec=5
+User=root
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+systemctl daemon-reload
+systemctl enable ${SERVICE_NAME}
+systemctl restart ${SERVICE_NAME}
+
+IP=$(hostname -I | awk '{print $1}')
+
+echo ""
+echo "Fertig."
+echo "Aufruf:"
+echo "http://${IP}:14943"
