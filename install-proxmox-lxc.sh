@@ -14,14 +14,14 @@ CTID=${CTID:-14943}
 read -p "Hostname [funkgeraeteverwaltung]: " HOSTNAME
 HOSTNAME=${HOSTNAME:-funkgeraeteverwaltung}
 
-read -p "CPU Kerne [2]: " CORES
-CORES=${CORES:-2}
+read -p "CPU Kerne [1]: " CORES
+CORES=${CORES:-1}
 
-read -p "RAM in MB [2048]: " MEMORY
-MEMORY=${MEMORY:-2048}
+read -p "RAM in MB [1024]: " MEMORY
+MEMORY=${MEMORY:-1024}
 
-read -p "Speicher in GB [10]: " DISK
-DISK=${DISK:-10}
+read -p "Speicher in GB [2]: " DISK
+DISK=${DISK:-2}
 
 read -p "Storage [local-lvm]: " STORAGE
 STORAGE=${STORAGE:-local-lvm}
