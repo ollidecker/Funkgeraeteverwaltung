@@ -14,6 +14,9 @@ CTID=${CTID:-14943}
 read -p "Hostname [funkgeraeteverwaltung]: " HOSTNAME
 HOSTNAME=${HOSTNAME:-funkgeraeteverwaltung}
 
+read -p "Root Passwort [root]: " ROOTPW
+ROOTPW=${ROOTPW:-root}
+
 read -p "CPU Kerne [1]: " CORES
 CORES=${CORES:-1}
 
@@ -54,6 +57,8 @@ echo ""
 echo "Zusammenfassung:"
 echo "CT ID: $CTID"
 echo "Hostname: $HOSTNAME"
+echo "Root Login: root"
+echo "Root Passwort: $ROOTPW"
 echo "CPU: $CORES"
 echo "RAM: ${MEMORY} MB"
 echo "Disk: ${DISK} GB"
@@ -99,6 +104,7 @@ pct create "$CTID" "local:vztmpl/${TEMPLATE}" \
   --net0 "$NET_CONF" \
   --nameserver "$DNS" \
   --ostype debian \
+  --password "$ROOTPW" \
   --unprivileged 1 \
   --features nesting=1 \
   --start 1
@@ -126,5 +132,7 @@ echo "======================================="
 echo ""
 echo "Container ID: $CTID"
 echo "Hostname: $HOSTNAME"
+echo "Login: root"
+echo "Passwort: $ROOTPW"
 echo "Aufruf:"
 echo "http://${IP}:${APP_PORT}"
