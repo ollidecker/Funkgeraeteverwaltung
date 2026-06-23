@@ -14,8 +14,8 @@ CTID=${CTID:-14943}
 read -p "Hostname [funkgeraeteverwaltung]: " HOSTNAME
 HOSTNAME=${HOSTNAME:-funkgeraeteverwaltung}
 
-read -p "Root Passwort [root]: " ROOTPW
-ROOTPW=${ROOTPW:-root}
+read -p "Root Passwort [rootroot]: " ROOTPW
+ROOTPW=${ROOTPW:-rootroot}
 
 read -p "CPU Kerne [1]: " CORES
 CORES=${CORES:-1}
