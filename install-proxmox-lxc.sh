@@ -106,9 +106,14 @@ pct create "$CTID" "local:vztmpl/${TEMPLATE}" \
 echo "Warte auf Netzwerk..."
 sleep 12
 
-echo "Installiere App im Container..."
-pct exec "$CTID" -- bash -c "curl -s ${APP_INSTALL_URL} | bash -s -- ${APP_PORT}"
+echo "Installiere Voraussetzungen im Container..."
 
+pct exec "$CTID" -- apt update
+pct exec "$CTID" -- apt install -y curl
+
+echo "Installiere App im Container..."
+
+pct exec "$CTID" -- bash -c "curl -s ${APP_INSTALL_URL} | bash -s -- ${APP_PORT}"
 echo ""
 echo "======================================="
 echo " Fertig"
