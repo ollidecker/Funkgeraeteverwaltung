@@ -125,3 +125,10 @@ IP=$(pct exec "$CTID" -- hostname -I | awk '{print $1}')
 echo "Container ID: $CTID"
 echo "Aufruf:"
 echo "http://${IP}:${APP_PORT}"
+
+
+sleep 10
+
+echo "Prüfe Dienst..."
+
+pct exec "$CTID" -- systemctl is-active funkgeraeteverwaltung
