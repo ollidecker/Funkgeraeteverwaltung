@@ -104,31 +104,27 @@ pct create "$CTID" "local:vztmpl/${TEMPLATE}" \
   --start 1
 
 echo "Warte auf Netzwerk..."
-sleep 12
+sleep 15
 
 echo "Installiere Voraussetzungen im Container..."
-
 pct exec "$CTID" -- apt update
 pct exec "$CTID" -- apt install -y curl
 
 echo "Installiere App im Container..."
-
 pct exec "$CTID" -- bash -c "curl -s ${APP_INSTALL_URL} | bash -s -- ${APP_PORT}"
+
+echo "Pruefe Dienst..."
+sleep 5
+pct exec "$CTID" -- systemctl is-active funkgeraeteverwaltung
+
+IP=$(pct exec "$CTID" -- hostname -I | awk '{print $1}')
+
 echo ""
 echo "======================================="
 echo " Fertig"
 echo "======================================="
 echo ""
-
-IP=$(pct exec "$CTID" -- hostname -I | awk '{print $1}')
-
 echo "Container ID: $CTID"
+echo "Hostname: $HOSTNAME"
 echo "Aufruf:"
 echo "http://${IP}:${APP_PORT}"
-
-
-sleep 10
-
-echo "Prüfe Dienst..."
-
-pct exec "$CTID" -- systemctl is-active funkgeraeteverwaltung
