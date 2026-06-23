@@ -8,6 +8,8 @@ bash <(curl -s https://raw.githubusercontent.com/ollidecker/Funkgeraeteverwaltun
 # Installation direkt auf Proxmox als Container:
 bash <(curl -s https://raw.githubusercontent.com/ollidecker/Funkgeraeteverwaltung/main/install-proxmox-lxc.sh)
 
+# Update direkt im LXC
+curl -s https://raw.githubusercontent.com/ollidecker/Funkgeraeteverwaltung/main/update.sh | bash
 
 
 
